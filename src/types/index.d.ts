@@ -15,44 +15,52 @@ export interface Employee {
 	startDate: string;
 	position: string;
 	department: string;
-}
+  }
 
-export interface Payroll {
+  export interface Payroll {
 	id: string;
 	employeeId: string;
 	employeeName: string;
 	date: string;
-	grossSalary: number;
-	firstQuinzena: number;
-	secondQuinzena: number;
-	overtimePay: number;
-	overtimeHours: number;
-	bonus: number;
-	vacation: number;
-	isss: number;
-	afp: number;
-	rent: number;
-	totalDeductions: number;
-	netSalary: number;
+	grossSalary: string;
+	firstQuinzena: string;
+	secondQuinzena: string;
+	overtimeHours: {
+	  daily: string;
+	  nightly: string;
+	};
+	totalOvertimePay: string;
+	bonus: string;
+	discount: string;
+	vacation: string;
+	isss: string;
+	afp: string;
+	rent: string;
+	totalDeductions: string;
+	netSalary: string;
 	includeVacation: boolean;
-	employerIsss: number;
-	employerAfp: number;
-	insaforp: number;
-	totalEmployerContributions: number;
+	employerIsss: string;
+	employerAfp: string;
+	insaforp: string;
+	totalEmployerContributions: string;
 	includeAguinaldo: boolean;
-	aguinaldo: number;
-}
+	aguinaldo: string;
+  }
 
-interface FormState {
-	selectedEmployee: string;
+  export interface FormState {
+	selectedEmployee: string
 	date: string;
-	firstQuinzena: number;
-	secondQuinzena: number;
-	overtimePay: number;
-	overtimeHours: number;
-	bonus: number;
-	vacation: number;
+	firstQuinzena: string;
+	secondQuinzena: string;
+	overtimeHours: {
+	  daily: string;
+	  nightly: string;
+	};
+	totalOvertimePay: string;
+	bonus: string;
+	discount: string;
+	vacation: string;
 	includeVacation: boolean;
 	includeAguinaldo: boolean;
-	aguinaldo: number;
-}
+	aguinaldo: string;
+  }

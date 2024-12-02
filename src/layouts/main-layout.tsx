@@ -41,7 +41,7 @@ export function MainLayout({ children }: Props): ReactNode {
 								to="/"
 								className="hidden lg:inline text-white font-bold text-sm md:text-xl hover:text-white/90 truncate max-w-[200px] md:max-w-none"
 							>
-								Taller Mecánico "Rodriguez y Asociados"
+								Payroll App
 							</Link>
 							<Link
 								to="/"

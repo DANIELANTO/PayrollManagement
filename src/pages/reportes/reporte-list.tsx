@@ -15,7 +15,6 @@ function EmpleadoList() {
 	const [search, setSearch] = useState(""); // Estado para búsqueda
 	const [filteredRecords, setFilteredRecords] = useState(mockSalaryRecords); // Registros filtrados
 
-	console.log(recordToDelete, recordToEdit);
 
 	// Manejar cambios en la búsqueda
 	const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {

@@ -6,8 +6,6 @@ import HomePage from "./pages/home/home-page";
 import LoginPage from "./pages/login/login-page";
 import EmpleadoList from "./pages/empleados/empleado-list";
 import EmpleadoForm from "./pages/empleados/empleado-form";
-import PlanillaList from "./pages/planillas/planilla-list";
-import PlanillaForm from "./pages/planillas/planilla-form";
 import ReporteList from "./pages/reportes/reporte-list";
 import ReporteForm from "./pages/reportes/reporte-form";
 import { Toaster } from "sonner";
@@ -16,6 +14,8 @@ import DashboardPage from "./pages/dashboard/dashboard-page";
 import NotAuthorizedPage from "./pages/notAuthorized/not-authorized-page";
 import ProtectedRoute from "./components/protected-route";
 import { Role } from "./types/roleEnum";
+import PlanillaList from "./pages/payrolls/payrollList/payroll-list";
+import PayrollForm from "./pages/payrolls/payrollForm/payroll-form";
 
 const router = createBrowserRouter(
 	[
@@ -59,7 +59,7 @@ const router = createBrowserRouter(
 			path: "/planilla/:id", // Para crear o editar planillas
 			element: (
 				<ProtectedRoute role={Role.user}>
-					<PlanillaForm />
+					<PayrollForm />
 				</ProtectedRoute>
 			),
 		},
@@ -97,13 +97,21 @@ const router = createBrowserRouter(
 		},
 	],
 	{
-		basename: "/ANF-Planilla",
+		basename: "/Dashboard",
+		future: {
+			v7_relativeSplatPath: true,
+			v7_fetcherPersist: true,
+			v7_normalizeFormMethod: true,
+			v7_partialHydration: true,
+			v7_skipActionErrorRevalidation: true,
+		  },
+		
 	}
 );
 
 createRoot(document.getElementById("root")!).render(
 	<StrictMode>
-		<RouterProvider router={router} />
+		<RouterProvider router={router} future={{ v7_startTransition: true }} />
 		<Toaster richColors />
 	</StrictMode>
 );

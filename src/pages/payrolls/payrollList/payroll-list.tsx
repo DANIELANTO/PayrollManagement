@@ -1,12 +1,12 @@
 // planilla-list.tsx
 import { Link } from "react-router-dom";
-import { PayrollService } from "./services/planilla-service";
+import { PayrollService } from "../services/payroll-service";
 import { Pencil, Trash2, Calendar } from "lucide-react";
-import { formatCurrency } from "../../utils/format";
-import PrintPayrollModal from "./modal/planilla-modal";
-import { MainLayout } from "../../layouts/main-layout";
-import { usePayrollStore } from "../../store/payroll-store";
-import { formatDisplayDate } from "../../utils/datetimeUtil";
+import { formatCurrency } from "../../../utils/format";
+import PrintPayrollModal from "../modal/planilla-modal";
+import { MainLayout } from "../../../layouts/main-layout";
+import { usePayrollStore } from "../../../store/payroll-store";
+import { formatDisplayDate } from "../../../utils/datetimeUtil";
 
 function PlanillaList() {
 	const payrolls = usePayrollStore((state) => state.payrolls);
@@ -114,8 +114,9 @@ function PlanillaList() {
 											(payroll.bonus || 0) + (payroll.vacation || 0);
 										const baseSalary =
 											payroll.firstQuinzena +
-											payroll.secondQuinzena +
-											(payroll.overtimePay || 0);
+											payroll.secondQuinzena 
+											// +
+											// (payroll.overtimePay || 0);
 
 										return (
 											<tr key={payroll.id} className="hover:bg-gray-50">
