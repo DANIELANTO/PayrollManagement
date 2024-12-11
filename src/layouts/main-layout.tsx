@@ -34,9 +34,9 @@ export function MainLayout({ children }: Props): ReactNode {
 		<div className="flex flex-col bg-gray-50 min-h-screen">
 			<nav className="bg-cyan-500 px-10 md:px-10 py-4 shadow-lg sticky top-0">
 				<div className="container">
-					<div className="flex justify-between items-center">
+					<div className="flex justify-end items-center">
 						{/* Logo y nombre del negocio */}
-						<div className="flex items-center">
+						<div className="items-center hidden sm:flex">
 							<Link
 								to="/"
 								className="hidden lg:inline text-white font-bold text-sm md:text-xl hover:text-white/90 truncate max-w-[200px] md:max-w-none"
@@ -47,7 +47,7 @@ export function MainLayout({ children }: Props): ReactNode {
 								to="/"
 								className="inline lg:hidden text-white font-bold text-sm md:text-xl hover:text-white/90 truncate max-w-[200px] md:max-w-none"
 							>
-								Rodriguez y Asociados
+								Payroll App
 							</Link>
 						</div>
 

@@ -265,10 +265,10 @@ const PrintPayrollModal = ({ payroll }: { payroll: Payroll }) => {
     <>
       <button
         onClick={() => setIsOpen(true)}
-        className="text-gray-600 hover:text-gray-900 inline-flex items-center gap-1"
+        className="text-gray-600 hover:text-gray-900 inline-flex items-center gap-1 pl-2"
       >
         <Printer className="w-4 h-4" />
-        <span className="hidden md:inline">Imprimir</span>
+        <span className="inline text-sm sm:text-base p-1">Imprimir</span>
       </button>
 
       {isOpen && (

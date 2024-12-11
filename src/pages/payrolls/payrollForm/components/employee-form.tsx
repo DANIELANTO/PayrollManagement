@@ -1,33 +1,40 @@
 import Calendar from "react-calendar";
 import { useEffect, useRef, useState } from "react";
-import { calculateOvertimePay, calculateVacation, calculateYearlyBonus, getVacationStatus } from "../hooks/payroll-calculations";
-import { isDecember, validateOvertimeHours } from "../hooks/payroll-validations";
+import {
+  calculateOvertimePay,
+  calculateVacation,
+  calculateYearlyBonus,
+  getVacationStatus,
+} from "../hooks/payroll-calculations";
+import {
+  isDecember,
+  validateOvertimeHours,
+} from "../hooks/payroll-validations";
 import { formatCurrency } from "../../../../utils/format";
-import { initialFormState } from "../payroll-form";
+import { initialFormState } from "../constants/constants";
 
-function EmployeeCard({formData, setFormData, employees}) {
-
+function EmployeeCardForm({ formData, setFormData, employees }) {
   // useState Hooks
   const [showCalendar, setShowCalendar] = useState(false);
   const [overtimeError, setOvertimeError] = useState<string>("");
   const [discountError, setDiscountError] = useState<string>("");
 
   // useEffect Hooks
-    // Click outside calendar handler
-    useEffect(() => {
-      const handleClickOutside = (event: MouseEvent) => {
-        if (
-          wrapperRef.current &&
-          !wrapperRef.current.contains(event.target as Node)
-        ) {
-          setShowCalendar(false);
-        }
-      };  
-      document.addEventListener("mousedown", handleClickOutside);
-      return () => {
-        document.removeEventListener("mousedown", handleClickOutside);
-      };
-    }, []);
+  // Click outside calendar handler
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        wrapperRef.current &&
+        !wrapperRef.current.contains(event.target as Node)
+      ) {
+        setShowCalendar(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   // Personalized Hooks
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -85,9 +92,9 @@ function EmployeeCard({formData, setFormData, employees}) {
     );
 
     newOvertimeHours.daily =
-      newOvertimeHours.daily !== 0 ? newOvertimeHours.daily : '';
+      newOvertimeHours.daily !== 0 ? newOvertimeHours.daily : "";
     newOvertimeHours.nightly =
-      newOvertimeHours.nightly !== 0 ? newOvertimeHours.nightly : '';
+      newOvertimeHours.nightly !== 0 ? newOvertimeHours.nightly : "";
 
     setFormData((prev) => ({
       ...prev,
@@ -121,26 +128,26 @@ function EmployeeCard({formData, setFormData, employees}) {
     setDiscountError("");
     setFormData((prev) => ({
       ...prev,
-      discount: value !== 0 ? value : '',
+      discount: value !== 0 ? value : "",
     }));
   };
 
-    // Handler for the vacation checkbox change
-    const handleVacationChange = (checked: boolean) => {
-      const employee = employees.find(
-        (emp) => emp.id === formData.selectedEmployee
-      );
-      if (!employee) return;
-  
-      const vacationAmount = checked ? calculateVacation(employee.baseSalary) : 0;
-      setFormData((prev) => ({
-        ...prev,
-        includeVacation: checked,
-        vacation: vacationAmount,
-      }));
-    };
+  // Handler for the vacation checkbox change
+  const handleVacationChange = (checked: boolean) => {
+    const employee = employees.find(
+      (emp) => emp.id === formData.selectedEmployee
+    );
+    if (!employee) return;
 
-      // Handler for the aguinaldo checkbox change
+    const vacationAmount = checked ? calculateVacation(employee.baseSalary) : 0;
+    setFormData((prev) => ({
+      ...prev,
+      includeVacation: checked,
+      vacation: vacationAmount,
+    }));
+  };
+
+  // Handler for the aguinaldo checkbox change
   const handleAguinaldoChange = (checked: boolean) => {
     const employee = employees.find(
       (emp) => emp.id === formData.selectedEmployee
@@ -159,37 +166,37 @@ function EmployeeCard({formData, setFormData, employees}) {
     }));
   };
 
-    // Update base salary when employee is selected
-    const updateBaseSalary = (employeeId: string) => {
-      const employee = employees.find((emp) => emp.id === employeeId);
-      if (employee) {
-        const baseSalaryPerQuinzena = employee.baseSalary / 2;
-        const overtimePay = calculateOvertimePay(
-          formData.overtimeHours.daily,
-          formData.overtimeHours.daily,
-          employee.baseSalary
-        );
-        setFormData((prev) => ({
-          ...prev,
-          firstQuinzena: baseSalaryPerQuinzena,
-          secondQuinzena: baseSalaryPerQuinzena,
-          ...overtimePay,
-        }));
-      }
-    };
+  // Update base salary when employee is selected
+  const updateBaseSalary = (employeeId: string) => {
+    const employee = employees.find((emp) => emp.id === employeeId);
+    if (employee) {
+      const baseSalaryPerQuinzena = employee.baseSalary / 2;
+      const overtimePay = calculateOvertimePay(
+        formData.overtimeHours.daily,
+        formData.overtimeHours.daily,
+        employee.baseSalary
+      );
+      setFormData((prev) => ({
+        ...prev,
+        firstQuinzena: baseSalaryPerQuinzena,
+        secondQuinzena: baseSalaryPerQuinzena,
+        ...overtimePay,
+      }));
+    }
+  };
 
-    //Format date
-    const formatDate = (date: Date) => {
-      return date.toISOString().split("T")[0];
-    };
+  //Format date
+  const formatDate = (date: Date) => {
+    return date.toISOString().split("T")[0];
+  };
 
-    //Evaluate the vacation status
-    const vacationStatus = getVacationStatus(formData, employees);
+  //Evaluate the vacation status
+  const vacationStatus = getVacationStatus(formData, employees);
 
   return (
     <>
       <div className="grid grid-cols-1 gap-6">
-        <div className="flex gap-6">
+        <div className="flex flex-col sm:flex-row gap-6">
           <div className="w-full">
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Empleado
@@ -243,7 +250,7 @@ function EmployeeCard({formData, setFormData, employees}) {
           </div>
         </div>
 
-        <div className="flex gap-6">
+        <div className="flex flex-col sm:flex-row gap-6">
           <div className="w-full">
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Horas Extra Diurnas
@@ -277,7 +284,10 @@ function EmployeeCard({formData, setFormData, employees}) {
               type="number"
               value={formData.overtimeHours.nightly}
               onChange={(e) =>
-                handleOvertimeHoursChange("nightly", Number(e.target.value ?? 0))
+                handleOvertimeHoursChange(
+                  "nightly",
+                  Number(e.target.value ?? 0)
+                )
               }
               className={`mt-1 block w-full rounded-md shadow-sm focus:ring-blue-500 ${
                 overtimeError
@@ -325,7 +335,7 @@ function EmployeeCard({formData, setFormData, employees}) {
             onChange={(e) =>
               setFormData({
                 ...formData,
-                bonus: e.target.value ? Number(e.target.value) : '',
+                bonus: e.target.value ? Number(e.target.value) : "",
               })
             }
             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
@@ -333,7 +343,7 @@ function EmployeeCard({formData, setFormData, employees}) {
             step="0.01"
           />
         </div>
-        <div className="flex gap-6">
+        <div className="flex flex-col lg:flex-row gap-6">
           <div className="flex items-center">
             <input
               type="checkbox"
@@ -356,14 +366,19 @@ function EmployeeCard({formData, setFormData, employees}) {
               }`}
             >
               Incluir Vacaciones
+              {!formData.selectedEmployee && (
+                <span className="ml-2 text-xs text-gray-500">
+                  (Seleccione un empleado primero)
+                </span>
+              )}
+              {formData.selectedEmployee && !vacationStatus.eligible && !vacationStatus.hasUsed && (
+                <span className="ml-2 text-xs text-gray-500">
+                  (No elegible aún)
+                </span>
+              )}
               {vacationStatus.hasUsed && (
                 <span className="ml-2 text-xs text-red-500">
                   (Ya utilizadas este año)
-                </span>
-              )}
-              {!vacationStatus.eligible && !vacationStatus.hasUsed && (
-                <span className="ml-2 text-xs text-gray-500">
-                  (No elegible aún)
                 </span>
               )}
             </label>
@@ -413,4 +428,4 @@ function EmployeeCard({formData, setFormData, employees}) {
   );
 }
 
-export default EmployeeCard;
+export default EmployeeCardForm;
